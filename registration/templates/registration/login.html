@@ -1,0 +1,32 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;}</style>
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        {% if "register" in request.GET %}
+          <p style="color:green">User created successfully.</p>
+        {% endif %}
+        <form action="" method="post">{% csrf_token %}
+          <h3 class="mb-4" style="color:orange;">Log in</h3>
+          {% if form.non_field_errors %}
+            <p style="color:red">Incorrect username or password, try again.</p>
+          {% endif %}
+          <p>
+            <input type="text" name="username" autofocus maxlength="254" required
+              id="id_username" class="form-control" placeholder="Username"/>
+          </p>
+          <p>
+            <input type="password" name="password" required
+              id="id_password" class="form-control" placeholder="Password"/>
+          </p>
+          <p><input type="submit" class="btn btn-warning btn-block" value="Login"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

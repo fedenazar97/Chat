@@ -1,0 +1,52 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+{% block title %}Mensajes{% endblock %}
+{% block content %}
+<style>
+  .avatar3  { width:50px; height:50px; float:left; margin-right:10px; }
+</style>
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <div class="row">
+          <div class="col-md-4">
+            {% for thread in threads %}
+              <div class="mb-3">
+                {% if request.user.id == thread.sender.id %} 
+                  {% if thread.receiver.profile.avatar %}
+                    <img src="{{thread.receiver.profile.avatar.url}}" class="avatar3"><br>
+                  {% else %}
+                    <img src="{% static 'registration/img/no-avatar.jpg' %}" class="avatar3"><br>
+                  {% endif %}
+                    <div>
+                      <a href="{% url 'messenger:chat' thread.receiver.username %}">{{thread.receiver.username}}</a><br>
+                    </div>
+                {% else %}
+                  {% if thread.sender.profile.avatar %}
+                    <img src="{{thread.sender.profile.avatar.url}}" class="avatar3"><br>
+                  {% else %}
+                    <img src="{% static 'registration/img/no-avatar.jpg' %}" class="avatar3"><br>
+                  {% endif %}
+                  <div>
+                    <a href="{% url 'messenger:chat' thread.sender.username %}">{{thread.sender.username}}</a><br>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          <!-- Hilos de conversación -->
+          <div class="col-md-8">
+            <p><i>Select a thread from your left panel.
+            If you haven't started any thread yet, you can look for profiles to chat 
+            <a href="{% url 'profiles:list' %}">here</a>.</i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+                  
+                    
+             
